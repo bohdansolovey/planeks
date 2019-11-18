@@ -1,0 +1,3 @@
+Hello {{ first_name }},
+You have new comment for your post {{ post_link }}
+Best regards

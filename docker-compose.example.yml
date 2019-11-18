@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_USER=myprojectuser
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=myproject1
+    # comment volume section on OSX machines
+    volumes:
+      - ./data/pg_data:/var/lib/postgresql/data:z
+
+  redis_db:
+    image: redis:5-alpine
+    ports:
+      - "16379:6379"
+  web_app:
+    build: ./
+    environment:
+      - DATABASE_ENGINE=django.db.backends.postgresql_psycopg2
+      - DATABASE_HOST=postgres_db
+      - DATABASE_NAME=myproject
+      - DATABASE_USER=myprojectuser
+      - DATABASE_PASSWORD=password
+      - DATABASE_PORT=5432
+      - REDIS_CONNECTION_STRING=redis://redis_db:16379
+      - APP_MODE=web
+    volumes:
+    - ./data/web_logs:/app/data/logs
+    - ./data/media:/app/data/media
+    ports:
+    - "8080:80"
+
+  celery_app:
+    build: ./
+    environment:
+      - DATABASE_ENGINE=django.db.backends.postgresql_psycopg2
+      - DATABASE_HOST=postgres_db
+      - DATABASE_NAME=myproject
+      - DATABASE_USER=myprojectuser
+      - DATABASE_PASSWORD=password
+      - DATABASE_PORT=5432
+      - REDIS_CONNECTION_STRING=redis://redis_db:16379
+      - APP_MODE=celery
+    volumes:
+      - ./data/celery_logs:/app/data/logs
+      - ./data/media:/app/data/media

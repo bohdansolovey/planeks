@@ -1,0 +1,2 @@
+Hello {{ first_name }},
+You was registered  link to confirm email: {{ token }}
