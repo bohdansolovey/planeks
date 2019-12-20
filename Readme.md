@@ -11,4 +11,4 @@
 ### About
 - You can read docs of this api  when its running on address /docs
 
-##### TODO: fix dockerfile (after fix problems with provider)
+##### TODO: fix dockerfile (after fix problems with provider), add core/models folder
