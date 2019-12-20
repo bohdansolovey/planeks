@@ -1,4 +1,4 @@
-# Test project for Planeks
+# Test project 
 ## Рython 3.6
 ### How to build this project ? 
 1. `pip install -r requirements.txt`
